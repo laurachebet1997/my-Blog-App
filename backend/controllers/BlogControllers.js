@@ -36,8 +36,8 @@ export const addBlog = async (req, res, next) => {
         const session = await mongoose.startSession();
         session.startTransaction();
         await blog.save();
-        existinguser.blogs.push(blog)
-        await existinguser.save({session})
+        existingUser.blogs.push(blog)
+        await existingUser.save({session})
         await session.commitTransaction();
     }catch(err){
         return console.log(err)
