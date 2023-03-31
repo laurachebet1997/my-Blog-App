@@ -3,5 +3,8 @@
     "@reduxjs/toolkit": "^1.9.3",
     "bcryptjs": "^2.4.3",
     "react-redux": "^8.0.5"
+  },
+  "devDependencies": {
+    "gh-pages": "^5.0.0"
   }
 }
