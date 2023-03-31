@@ -18,16 +18,6 @@ export const getAllUser = async (req, res, next) => {
 export const signUp = async (req,res,next) => {
     const { name, email, password } = req.body
 
-     if (!name || !email || !password) {
-         res.status(400)
-         throw new Error('add all fields')
-     }else if (!/^[a-zA-Z]+$/.test(name)) {
-         throw new Error("name must be in letters only")
-     }else if (!/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email)) {
-         alert("invalid email")
-     }else if (password.length < 6 ) {
-         throw new Error("password must not be less than six characters")
-     }else {
         let existingUser;
         try {
             existingUser = await User.findOne({email})
@@ -52,7 +42,7 @@ export const signUp = async (req,res,next) => {
         }
          return res.status(200).json({user})       
 }
-}
+
 
  
 export const login = async (req,res,next) => {
@@ -63,12 +53,21 @@ export const login = async (req,res,next) => {
     }catch(err) {
         return console.log(err)
     }
+    try {
     if(!existingUser) {
         return res.status(404).json({msg:"user by this email doesn`t exists!"})
+    }}catch(err) {
+        console.log(err.response.data)
     }
+    try{
     const isPasswordCorrect = bcrypt.compareSync(password,existingUser.password)
-    if(!isPasswordCorrect){
+    if(!isPasswordCorrect){     
         res.status(400).json({msg:"password incorrect!"})
+        //throw new Error("password incorrect!")
+        console.log(e.response.data)
+    }}catch(err){
+        console.log(err.response.data)
+        console.error(err)
     }
     return res.status(200).json({msg:"login successfull",user:existingUser})
 }
